@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#f5f6f1" />
 <link rel="manifest" href="manifest.webmanifest" />
-<meta name="acnh-version" content="v16-island-ui"><title>모여봐요 동물의 숲 · 내 도감</title>
+<meta name="acnh-version" content="v17-clean-logo"><title>모여봐요 동물의 숲 · 내 도감</title>
 <style>
 :root{--bg:#f7f1dd;--card:#fffdf5;--ink:#37423b;--muted:#7b837e;--green:#6fa66d;--mint:#dcebd6;--yellow:#f2d675;--yellow2:#fff4b8;--red:#d86d62;--line:#e8e0c9;--shadow:0 8px 24px rgba(79,72,47,.08)}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(#d9eee2 0 150px,var(--bg) 150px);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:var(--ink)}
@@ -274,6 +274,26 @@ nav{padding-bottom:calc(10px + env(safe-area-inset-bottom))}.navin{
   .gameLogo{width:190px}.profilePill{max-width:112px}.summary{gap:5px}.stat{border-width:1.5px}.controls{padding:10px}.topline h2{font-size:16px}.navin{border-radius:26px 22px 27px 21px}
 }
 
+
+/* v17: transparent game logo, centered like a real app title */
+header{
+  display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;
+  gap:0!important;padding:5px 14px 14px!important;
+}
+.titleWrap{width:100%!important;display:flex!important;justify-content:center!important;align-items:center!important;padding:0!important}
+.gameLogo{
+  width:min(330px,88vw)!important;max-width:100%!important;height:auto!important;display:block!important;
+  border-radius:0!important;box-shadow:none!important;filter:drop-shadow(0 5px 0 rgba(46,101,71,.10))!important;
+}
+.profilePill{
+  align-self:flex-end!important;margin-top:-4px!important;max-width:180px!important;
+  padding:7px 11px!important;border-radius:19px 16px 20px 16px!important;transform:rotate(.5deg)!important;
+}
+@media(max-width:520px){
+  header{padding-top:3px!important;padding-bottom:11px!important}
+  .gameLogo{width:min(285px,88vw)!important}
+  .profilePill{max-width:165px!important;margin-top:-5px!important;padding:6px 10px!important}
+}
 </style>
 </head>
 <body>
