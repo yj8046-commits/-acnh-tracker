@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#f5f6f1" />
 <link rel="manifest" href="manifest.webmanifest" />
-<meta name="acnh-version" content="v17-clean-logo"><title>모여봐요 동물의 숲 · 내 도감</title>
+<meta name="acnh-version" content="v20-safe-logo"><title>모여봐요 동물의 숲 · 내 도감</title>
 <style>
 :root{--bg:#f7f1dd;--card:#fffdf5;--ink:#37423b;--muted:#7b837e;--green:#6fa66d;--mint:#dcebd6;--yellow:#f2d675;--yellow2:#fff4b8;--red:#d86d62;--line:#e8e0c9;--shadow:0 8px 24px rgba(79,72,47,.08)}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(#d9eee2 0 150px,var(--bg) 150px);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:var(--ink)}
@@ -294,6 +294,25 @@ header{
   .gameLogo{width:min(285px,88vw)!important}
   .profilePill{max-width:165px!important;margin-top:-5px!important;padding:6px 10px!important}
 }
+
+/* v19: compact non-sticky title + safe logo margins */
+header{
+  position:static!important;top:auto!important;z-index:auto!important;
+  margin:0 -12px 8px!important;padding:2px 14px 8px!important;
+  background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+  border-bottom:0!important;overflow:visible!important;
+}
+.titleWrap{overflow:visible!important;min-height:0!important}
+.gameLogo{
+  width:min(236px,68vw)!important;max-width:none!important;height:auto!important;
+  object-fit:contain!important;overflow:visible!important;filter:drop-shadow(0 3px 0 rgba(46,101,71,.08))!important;
+}
+.profilePill{margin-top:-10px!important;max-width:155px!important;padding:5px 9px!important}
+@media(max-width:520px){
+  header{padding-top:0!important;padding-bottom:6px!important;margin-bottom:5px!important}
+  .gameLogo{width:min(198px,60vw)!important}
+  .profilePill{max-width:145px!important;margin-top:-9px!important;padding:5px 9px!important}
+}
 </style>
 </head>
 <body>
@@ -501,3 +520,22 @@ if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').cat
 </script>
 </body>
 </html>
+<!-- v21 patch: clean uncropped title asset; small non-sticky header -->
+<style>
+header{position:static!important;overflow:visible!important;padding-top:0!important;margin-top:0!important}
+.titleWrap{overflow:visible!important;width:100%!important}
+.gameLogo{
+  width:min(205px,57vw)!important;
+  max-width:205px!important;
+  height:auto!important;
+  object-fit:contain!important;
+  overflow:visible!important;
+  filter:none!important;border-radius:10px!important;
+}
+.profilePill{margin-top:-18px!important}
+@media(max-width:520px){
+  .gameLogo{width:min(168px,48vw)!important;max-width:168px!important}
+  header{padding-bottom:4px!important}
+  .profilePill{margin-top:-17px!important}
+}
+</style>
