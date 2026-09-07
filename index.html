@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#f7f1dd" />
+<link rel="manifest" href="manifest.webmanifest" />
+<title>내 동숲 도감</title>
+<style>
+:root{--bg:#f7f1dd;--card:#fffdf5;--ink:#37423b;--muted:#7b837e;--green:#6fa66d;--mint:#dcebd6;--yellow:#f2d675;--red:#d86d62;--line:#e8e0c9;--shadow:0 8px 24px rgba(79,72,47,.08)}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(#d9eee2 0 150px,var(--bg) 150px);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:var(--ink)}
+.app{max-width:760px;margin:auto;min-height:100vh;padding:calc(env(safe-area-inset-top) + 18px) 14px calc(env(safe-area-inset-bottom) + 90px)}
+header{display:flex;align-items:center;justify-content:space-between;padding:8px 4px 20px}h1{font-size:27px;margin:0}.sub{font-size:13px;color:#557063;margin-top:4px}.pill{background:#fff9d8;border:1px solid #eadc92;padding:8px 11px;border-radius:999px;font-size:13px;font-weight:700}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px 8px;text-align:center;box-shadow:var(--shadow)}.stat b{display:block;font-size:19px}.stat span{font-size:11px;color:var(--muted)}
+.controls,.card{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}.controls{padding:12px;margin-bottom:12px}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}select,input,button{font:inherit}.seg{display:flex;background:#eee8d7;border-radius:13px;padding:3px}.seg button{border:0;background:transparent;border-radius:10px;padding:8px 11px;color:#687068}.seg button.active{background:white;color:#3b4f42;font-weight:800;box-shadow:0 2px 6px #0001}.search{flex:1;min-width:140px;border:1px solid var(--line);border-radius:12px;padding:9px 11px;background:white}.filter{border:1px solid var(--line);border-radius:12px;padding:9px;background:white}
+.notice{padding:11px 13px;border-radius:14px;background:#fff3c6;font-size:13px;margin-top:10px}.list{display:grid;gap:9px}.item{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px;display:grid;grid-template-columns:54px 1fr auto;gap:11px;align-items:center;box-shadow:var(--shadow)}.icon{width:54px;height:54px;border-radius:14px;background:#eef4e8;object-fit:contain}.name{font-weight:850;font-size:16px}.meta{font-size:12px;color:var(--muted);line-height:1.5;margin-top:3px}.badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}.badge{font-size:10px;padding:4px 7px;border-radius:999px;background:#edf1e8}.badge.now{background:#d8efcc;color:#315a2c;font-weight:800}.badge.last{background:#ffe0d8;color:#8d3e34;font-weight:800}.check{width:36px;height:36px;border-radius:50%;border:2px solid #c8c8b7;background:white;font-size:19px}.check.done{border-color:var(--green);background:var(--green);color:white}.empty{text-align:center;padding:36px 10px;color:var(--muted)}
+nav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,253,245,.94);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:8px max(12px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom));display:flex;justify-content:center;z-index:10}.navin{max-width:760px;width:100%;display:grid;grid-template-columns:repeat(5,1fr);gap:3px}.navbtn{border:0;background:transparent;border-radius:12px;padding:7px 2px;color:#777;font-size:11px}.navbtn b{display:block;font-size:20px}.navbtn.active{background:var(--mint);color:#31563c;font-weight:800}
+.artTip{font-size:12px;background:#f4efe1;padding:8px 9px;border-radius:10px;margin-top:6px}.topline{display:flex;justify-content:space-between;align-items:center;margin:14px 2px 8px}.topline h2{font-size:17px;margin:0}.tiny{font-size:12px;color:var(--muted)}
+@media(max-width:520px){.summary{grid-template-columns:repeat(2,1fr)}.item{grid-template-columns:48px 1fr auto}.icon{width:48px;height:48px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div><h1>🏝️ 내 동숲 도감</h1><div class="sub">남반구 · 월별/현재 출현 · 박물관 체크</div></div><div class="pill" id="today"></div></header>
+<div class="summary" id="summary"></div>
+<div class="controls">
+  <div class="row">
+    <div class="seg" id="monthSeg"></div>
+    <select id="month" class="filter" aria-label="월"></select>
+    <input id="search" class="search" placeholder="이름 검색" />
+  </div>
+  <div class="row" style="margin-top:8px">
+    <select id="status" class="filter"><option value="all">전체</option><option value="left">남은 것만</option><option value="done">완료만</option></select>
+    <select id="availability" class="filter"><option value="month">이번 달 출현</option><option value="now">지금 출현 중</option><option value="last">이번 달이 마지막</option><option value="all">전체 도감</option></select>
+    <button id="backup" class="filter">백업</button><button id="restore" class="filter">복원</button><input id="restoreFile" type="file" accept="application/json" hidden>
+  </div>
+  <div class="notice" id="notice">처음 한 번만 잡은 것/기증한 것을 체크하면 다음부터 이 기기에 자동 저장돼.</div>
+</div>
+<div class="topline"><h2 id="sectionTitle">물고기</h2><span class="tiny" id="count"></span></div>
+<div class="list" id="list"><div class="empty">데이터 불러오는 중…</div></div>
+</div>
+<nav><div class="navin" id="nav"></div></nav>
+<script>
+const URLS={fish:'https://raw.githubusercontent.com/alexislours/ACNHAPI/master/fish.json',bugs:'https://raw.githubusercontent.com/alexislours/ACNHAPI/master/bugs.json',sea:'https://raw.githubusercontent.com/alexislours/ACNHAPI/master/sea.json',art:'https://raw.githubusercontent.com/alexislours/ACNHAPI/master/art.json'};
+const tabs=[['fish','🐟','물고기'],['bugs','🦋','곤충'],['sea','🦀','해산물'],['art','🖼️','미술품'],['todo','⭐','이번달']];
+let db={},tab='fish'; const state=JSON.parse(localStorage.getItem('acnh-state-v1')||'{}'); state.done ||= {};
+const $=s=>document.querySelector(s); const monthNow=new Date().getMonth()+1; const hourNow=new Date().getHours();
+$('#today').textContent=`${monthNow}월 · ${String(hourNow).padStart(2,'0')}시`;
+for(let m=1;m<=12;m++) $('#month').insertAdjacentHTML('beforeend',`<option value="${m}" ${m===monthNow?'selected':''}>${m}월</option>`);
+$('#monthSeg').innerHTML='<button class="active" data-h="south">남반구</button><button data-h="north">북반구</button>';
+let hemi=localStorage.getItem('acnh-hemi')||'south'; [...$('#monthSeg').children].forEach(b=>b.classList.toggle('active',b.dataset.h===hemi));
+$('#monthSeg').onclick=e=>{if(!e.target.dataset.h)return;hemi=e.target.dataset.h;localStorage.setItem('acnh-hemi',hemi);[...$('#monthSeg').children].forEach(b=>b.classList.toggle('active',b.dataset.h===hemi));render()}
+$('#nav').innerHTML=tabs.map(([k,i,n])=>`<button class="navbtn ${k===tab?'active':''}" data-tab="${k}"><b>${i}</b>${n}</button>`).join('');
+$('#nav').onclick=e=>{let b=e.target.closest('button');if(!b)return;tab=b.dataset.tab;[...$('#nav').children].forEach(x=>x.classList.toggle('active',x===b));render()}
+['month','status','availability'].forEach(id=>$('#'+id).onchange=render); $('#search').oninput=render;
+function key(type,id){return `${type}:${id}`}; function isDone(type,id){return !!state.done[key(type,id)]}
+function toggle(type,id){const k=key(type,id);state.done[k]=!state.done[k];localStorage.setItem('acnh-state-v1',JSON.stringify(state));render()}
+async function loadOne(k){try{let cached=localStorage.getItem('acnh-data-'+k); if(cached){db[k]=JSON.parse(cached);return} const r=await fetch(URLS[k]); if(!r.ok) throw 0; db[k]=await r.json(); try{localStorage.setItem('acnh-data-'+k,JSON.stringify(db[k]))}catch{} }catch{db[k]=null}}
+Promise.all(Object.keys(URLS).map(loadOne)).then(render);
+function arr(o){return Object.values(o||{})}
+function monthsFor(x){let a=x.availability; return a?.[`month-array-${hemi==='south'?'southern':'northern'}`]||[]}
+function timeFor(x){return x.availability?.['time-array']||[]}
+function availableMonth(x,m){return monthsFor(x).includes(+m)}
+function availableNow(x,m){return availableMonth(x,m)&&timeFor(x).includes(hourNow)}
+function lastMonth(x,m){const ms=monthsFor(x); if(!ms.includes(+m)||ms.length===12)return false; const next=(+m%12)+1; return !ms.includes(next)}
+function ko(x){return x.name?.['name-KRko']||x['file-name']||'이름 없음'}
+function icon(x,type){return x.icon_uri||x.image_uri|| (type==='art'?x.image_uri:'') || ''}
+function fmtTime(x){const t=x.availability?.time; return !t?'하루 종일':t.replace('am','오전').replace('pm','오후')}
+function artType(x){return /statue/i.test(x['file-name']||'')?'조각':'그림'}
+function artTip(x){return x.hasFake?'가품 있음 · 구매 전 확인':'가품 없음 · 항상 진품'}
+function normalized(type){return arr(db[type]).map(x=>({...x,_type:type}))}
+function currentItems(){const m=+$('#month').value, q=$('#search').value.trim().toLowerCase(),st=$('#status').value,av=$('#availability').value; let xs;
+ if(tab==='todo') xs=['fish','bugs','sea'].flatMap(normalized).filter(x=>availableMonth(x,m)&&!isDone(x._type,x.id)); else xs=normalized(tab);
+ xs=xs.filter(x=>{const d=isDone(x._type,x.id); if(st==='left'&&d)return false;if(st==='done'&&!d)return false;if(q&&!ko(x).toLowerCase().includes(q)&&!(x['file-name']||'').includes(q))return false; if(x._type==='art')return true;if(av==='month'&&!availableMonth(x,m))return false;if(av==='now'&&!availableNow(x,m))return false;if(av==='last'&&!lastMonth(x,m))return false;return true});
+ return xs.sort((a,b)=>ko(a).localeCompare(ko(b),'ko')) }
+function renderSummary(){const cats=[['fish','🐟'],['bugs','🦋'],['sea','🦀'],['art','🖼️']];$('#summary').innerHTML=cats.map(([k,e])=>{let total=arr(db[k]).length,done=arr(db[k]).filter(x=>isDone(k,x.id)).length;return `<div class="stat"><span>${e} ${k==='fish'?'물고기':k==='bugs'?'곤충':k==='sea'?'해산물':'미술품'}</span><b>${done}/${total||'-'}</b><span>완료</span></div>`}).join('')}
+function render(){renderSummary(); const titles={fish:'물고기',bugs:'곤충',sea:'해산물',art:'미술품',todo:`${$('#month').value}월에 남은 것`};$('#sectionTitle').textContent=titles[tab]; $('#availability').disabled=tab==='art'; if(!db.fish||!db.bugs||!db.sea||!db.art){$('#list').innerHTML='<div class="empty">데이터를 불러오지 못했어.<br>인터넷 연결 후 새로고침해줘.</div>';return}
+ const xs=currentItems();$('#count').textContent=`${xs.length}개`;
+ if(!xs.length){$('#list').innerHTML='<div class="empty">조건에 맞는 항목이 없어 🎉</div>';return}
+ $('#list').innerHTML=xs.map(x=>{const d=isDone(x._type,x.id); const im=icon(x,x._type); let meta='',badges=''; if(x._type==='art'){meta=`${artType(x)} · ${artTip(x)}`;badges=x.hasFake?'<span class="badge last">가품 주의</span>':'<span class="badge now">항상 진품</span>'} else {meta=`${x.availability?.location||''} · ${fmtTime(x)}`; if(availableNow(x,+$('#month').value))badges+='<span class="badge now">지금 출현</span>';if(lastMonth(x,+$('#month').value))badges+='<span class="badge last">이번 달 마지막</span>';}
+ return `<div class="item"><img class="icon" src="${im}" alt="" onerror="this.style.visibility='hidden'"><div><div class="name">${ko(x)}</div><div class="meta">${meta}</div><div class="badges">${badges}</div>${x._type==='art'&&x.hasFake?'<div class="artTip">여욱에게 살 땐 확대해서 진품/가품 차이를 확인해.</div>':''}</div><button class="check ${d?'done':''}" data-t="${x._type}" data-id="${x.id}">${d?'✓':'○'}</button></div>`}).join('');
+}
+$('#list').onclick=e=>{const b=e.target.closest('.check');if(b)toggle(b.dataset.t,b.dataset.id)}
+$('#backup').onclick=()=>{const blob=new Blob([JSON.stringify({state,hemi,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='acnh-tracker-backup.json';a.click();URL.revokeObjectURL(a.href)};
+$('#restore').onclick=()=>$('#restoreFile').click();$('#restoreFile').onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text());if(j.state?.done){localStorage.setItem('acnh-state-v1',JSON.stringify(j.state));location.reload()}}catch{alert('백업 파일을 읽지 못했어.')}};
+if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body>
+</html>

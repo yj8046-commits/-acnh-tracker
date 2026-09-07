@@ -1,0 +1,9 @@
+{
+  "name":"내 동숲 도감",
+  "short_name":"동숲 도감",
+  "start_url":"./index.html",
+  "display":"standalone",
+  "background_color":"#f7f1dd",
+  "theme_color":"#f7f1dd",
+  "icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
