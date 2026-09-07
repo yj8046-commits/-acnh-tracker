@@ -313,6 +313,15 @@ header{
   .gameLogo{width:min(198px,60vw)!important}
   .profilePill{max-width:145px!important;margin-top:-9px!important;padding:5px 9px!important}
 }
+
+/* v23: 실제 모동숲 도감/캐릭터 아이콘 하단 탭 */
+.navbtn{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-width:0}
+.navpic{display:flex;width:31px;height:31px;align-items:center;justify-content:center;margin:0 auto 1px}
+.navpic img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 1px 1px rgba(75,67,48,.15))}
+.navbtn[data-tab="collect"] .navpic{width:33px;height:33px}
+.navbtn>span:last-child{font-size:10px;line-height:1.05}
+.navbtn b{display:none!important}
+@media(max-width:430px){.navpic{width:29px;height:29px}.navbtn[data-tab="collect"] .navpic{width:31px;height:31px}}
 </style>
 </head>
 <body>
@@ -355,7 +364,12 @@ header{
 </div>
 <script>
 const URLS={fish:'https://raw.githubusercontent.com/alexislours/ACNHAPI/master/fish.json',bugs:'https://raw.githubusercontent.com/alexislours/ACNHAPI/master/bugs.json',sea:'https://raw.githubusercontent.com/alexislours/ACNHAPI/master/sea.json',art:'https://raw.githubusercontent.com/alexislours/ACNHAPI/master/art.json'};
-const tabs=[['fish','🐟','물고기'],['bugs','🦋','곤충'],['sea','🦀','해산물'],['collect','🗂️','수집품']];
+const tabs=[
+  ['fish','https://dodo.ac/np/images/7/71/Goldfish_NH_Icon.png','물고기'],
+  ['bugs','https://dodo.ac/np/images/c/cf/Emperor_Butterfly_NH_Icon.png','곤충'],
+  ['sea','https://dodo.ac/np/images/5/55/Scallop_NH_Icon.png','해산물'],
+  ['collect','https://nookipedia.com/wiki/Special:Redirect/file/Redd_NH_Character_Icon.png','수집품']
+];
 let db={},tab='fish',collect='art',view='all'; const state=JSON.parse(localStorage.getItem('acnh-state-v1')||'{}'); state.done ||= {};
 const $=s=>document.querySelector(s); const monthNow=new Date().getMonth()+1; const hourNow=new Date().getHours();
 $('#today').textContent=`${monthNow}월 · ${String(hourNow).padStart(2,'0')}시`;
@@ -382,7 +396,7 @@ $('#startBtn').onclick=()=>{
 };
 $('#profileBtn').onclick=openProfile; updateProfile(); if(!profile) openProfile();
 
-$('#nav').innerHTML=tabs.map(([k,i,n])=>`<button class="navbtn ${k===tab?'active':''}" data-tab="${k}"><b>${i}</b>${n}</button>`).join('');
+$('#nav').innerHTML=tabs.map(([k,i,n])=>`<button class="navbtn ${k===tab?'active':''}" data-tab="${k}"><span class="navpic"><img src="${i}" alt="" loading="eager"></span><span>${n}</span></button>`).join('');
 $('#nav').onclick=e=>{let b=e.target.closest('button');if(!b)return;tab=b.dataset.tab;[...$('#nav').children].forEach(x=>x.classList.toggle('active',x===b)); if(tab==='collect'&&['month','monthleft','now','last'].includes(view))view='all'; render()};
 $('#collectseg').onclick=e=>{const b=e.target.closest('button');if(!b)return;collect=b.dataset.collect;[...$('#collectseg').children].forEach(x=>x.classList.toggle('active',x===b));render()};
 $('#viewtabs').onclick=e=>{let b=e.target.closest('button');if(!b||b.disabled)return;setView(b.dataset.view)};
@@ -538,4 +552,13 @@ header{position:static!important;overflow:visible!important;padding-top:0!import
   header{padding-bottom:4px!important}
   .profilePill{margin-top:-17px!important}
 }
+
+/* v23: 실제 모동숲 도감/캐릭터 아이콘 하단 탭 */
+.navbtn{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-width:0}
+.navpic{display:flex;width:31px;height:31px;align-items:center;justify-content:center;margin:0 auto 1px}
+.navpic img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 1px 1px rgba(75,67,48,.15))}
+.navbtn[data-tab="collect"] .navpic{width:33px;height:33px}
+.navbtn>span:last-child{font-size:10px;line-height:1.05}
+.navbtn b{display:none!important}
+@media(max-width:430px){.navpic{width:29px;height:29px}.navbtn[data-tab="collect"] .navpic{width:31px;height:31px}}
 </style>
