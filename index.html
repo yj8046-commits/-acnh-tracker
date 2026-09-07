@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#f7f1dd" />
 <link rel="manifest" href="manifest.webmanifest" />
-<title>내 동숲 도감</title>
+<meta name="acnh-version" content="v9-profile-onboarding"><title>내 동숲 도감</title>
 <style>
 :root{--bg:#f7f1dd;--card:#fffdf5;--ink:#37423b;--muted:#7b837e;--green:#6fa66d;--mint:#dcebd6;--yellow:#f2d675;--yellow2:#fff4b8;--red:#d86d62;--line:#e8e0c9;--shadow:0 8px 24px rgba(79,72,47,.08)}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(#d9eee2 0 150px,var(--bg) 150px);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:var(--ink)}
 .app{max-width:760px;margin:auto;min-height:100vh;padding:calc(env(safe-area-inset-top) + 18px) 14px calc(env(safe-area-inset-bottom) + 90px)}
-header{display:flex;align-items:center;justify-content:space-between;padding:8px 4px 16px}h1{font-size:27px;margin:0}.sub{font-size:13px;color:#557063;margin-top:4px}.pill{background:#fff9d8;border:1px solid #eadc92;padding:8px 11px;border-radius:999px;font-size:13px;font-weight:700}
+header{display:flex;align-items:center;justify-content:space-between;padding:8px 4px 16px}.profilePill{border:1px solid #d9cfaa;background:#fff9df;border-radius:16px;padding:7px 10px;text-align:right;color:#4f6256;max-width:145px}.profilePill b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.profilePill span{font-size:10px;color:#7b837e}h1{font-size:27px;margin:0}.sub{font-size:13px;color:#557063;margin-top:4px}.pill{background:#fff9d8;border:1px solid #eadc92;padding:8px 11px;border-radius:999px;font-size:13px;font-weight:700}
 .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px 8px;text-align:center;box-shadow:var(--shadow)}.stat b{display:block;font-size:19px}.stat span{font-size:11px;color:var(--muted)}
 .controls{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:12px;margin-bottom:12px}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}select,input,button{font:inherit}.seg{display:flex;background:#eee8d7;border-radius:13px;padding:3px}.seg button{border:0;background:transparent;border-radius:10px;padding:8px 11px;color:#687068}.seg button.active{background:white;color:#3b4f42;font-weight:800;box-shadow:0 2px 6px #0001}.search{flex:1;min-width:140px;border:1px solid var(--line);border-radius:12px;padding:9px 11px;background:white}.filter{border:1px solid var(--line);border-radius:12px;padding:9px;background:white}.viewtabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}.viewtabs button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 5px;font-size:12px;color:#667069}.viewtabs button.active{background:#e8f1df;border-color:#b9d5ad;color:#315a2c;font-weight:800}.viewtabs button.hot{background:#fff7cb}.notice{padding:11px 13px;border-radius:14px;background:#fff3c6;font-size:13px;margin-top:10px}
 .topline{display:flex;justify-content:space-between;align-items:flex-end;margin:14px 2px 8px}.topline h2{font-size:17px;margin:0}.tiny{font-size:12px;color:var(--muted)}
@@ -20,11 +20,45 @@ header{display:flex;align-items:center;justify-content:space-between;padding:8px
 nav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,253,245,.94);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:8px max(12px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom));display:flex;justify-content:center;z-index:10}.navin{max-width:760px;width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:3px}.navbtn{border:0;background:transparent;border-radius:12px;padding:7px 2px;color:#777;font-size:11px}.navbtn b{display:block;font-size:20px}.navbtn.active{background:var(--mint);color:#31563c;font-weight:800}.artTip{font-size:12px;background:#f4efe1;padding:8px 9px;border-radius:10px;margin-top:6px;line-height:1.55}.collectseg{display:flex;gap:6px;margin:0 0 10px}.collectseg button{flex:1;border:1px solid var(--line);background:white;border-radius:12px;padding:9px;font-size:12px;color:#667069}.collectseg button.active{background:#e8f1df;border-color:#b9d5ad;color:#315a2c;font-weight:800}.gyroidIcon{display:grid;place-items:center;font-size:31px;background:#efe7d7}
 .variants{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:9px}.variant{border:1px solid #dcd5c4;background:#fff;border-radius:13px;padding:6px 4px;font-size:10px;color:#596159;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}.variant img{width:64px;height:64px;object-fit:contain;border-radius:8px;background:#f6f3e9}.variant.owned{background:#e4f1dc;border-color:#91bd80;color:#315a2c;font-weight:800;box-shadow:0 0 0 1px #91bd80 inset}.variant .vname{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.variantCount{font-size:11px;color:#6f786f;margin-top:6px}.allColors{border:1px solid #b9d5ad;background:#eef7e9;border-radius:10px;padding:6px 8px;font-size:11px;color:#315a2c;margin-top:7px}.allColors.complete{background:#cfe8c4;font-weight:800}
 @media(max-width:520px){.summary{grid-template-columns:repeat(2,1fr)}.item{grid-template-columns:48px 1fr auto}.icon{width:48px;height:48px}.viewtabs{grid-template-columns:repeat(2,1fr)}}
+
+/* v6 compact gallery */
+.list{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.item{padding:8px;grid-template-columns:42px 1fr 30px;gap:7px;border-radius:14px;align-items:start}
+.icon{width:42px;height:42px;border-radius:10px}.name{font-size:13px;line-height:1.2}.meta{font-size:10px;line-height:1.35;margin-top:2px}.badges{gap:3px;margin-top:4px}.badge{font-size:8px;padding:3px 5px}.check{width:28px;height:28px;font-size:14px}.monthstrip{gap:2px;margin-top:5px}.mcell{height:4px}.artTip{font-size:10px;line-height:1.35;padding:6px;margin-top:5px}.variants{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.variant{padding:3px 2px;font-size:8px;border-radius:9px}.variant img{width:44px;height:44px}.variantCount{font-size:9px}.allColors{font-size:9px;padding:5px}.gyroid-card{grid-column:1/-1}.art-card{grid-column:auto}.art-card .artTip{grid-column:1/-1}.notice{font-size:11px;padding:8px}.summary{gap:5px}.stat{padding:8px 4px;border-radius:13px}.stat b{font-size:16px}.stat span{font-size:9px}
+@media(min-width:650px){.list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* v7: 생물은 이미지 없이 초압축 리스트 / 미술품은 크게 */
+.critter-card{grid-template-columns:1fr 26px!important;padding:6px 7px!important;gap:5px!important;min-height:0;border-radius:12px!important;align-items:start!important}
+.critter-card .name{font-size:13px;line-height:1.15}
+.critter-card .meta{font-size:9px;line-height:1.28;margin-top:2px}
+.critter-card .badges{margin-top:3px;gap:3px}
+.critter-card .badge{font-size:7.5px;padding:2px 4px}
+.critter-card .check{width:24px;height:24px;font-size:12px}
+.critter-card .monthstrip{margin-top:4px;gap:2px}
+.critter-card .mcell{height:3px}
+.art-card{grid-column:1/-1!important;grid-template-columns:105px 1fr 34px!important;padding:11px!important;gap:10px!important;align-items:start!important}
+.art-card .icon{width:105px!important;height:105px!important;border-radius:12px!important;background:#f2eee2}
+.art-card .name{font-size:16px!important}.art-card .meta{font-size:12px!important;line-height:1.4!important}.art-card .badge{font-size:10px!important;padding:4px 7px!important}.art-card .artTip{font-size:12px!important;line-height:1.5!important;padding:8px 9px!important;margin-top:7px!important}.art-card .check{width:34px!important;height:34px!important}
+
+/* v8: 미술품 진품/가품 비교 */
+.art-card{grid-template-columns:1fr 38px!important}
+.art-card .art-main{min-width:0}
+.art-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px 0}
+.art-shot{background:#f4efe3;border-radius:12px;padding:6px;text-align:center;overflow:hidden}
+.art-shot img{display:block;width:100%;height:150px;object-fit:contain;border-radius:8px;background:#fff}
+.art-shot b{display:block;font-size:11px;margin-top:4px}
+.art-shot.fake b{color:#a34b42}.art-shot.real b{color:#3f7148}
+.art-single{grid-template-columns:1fr}.art-single .art-shot{max-width:280px;margin:auto;width:100%}
+@media(max-width:520px){.art-card{grid-template-columns:1fr 34px!important}.art-shot img{height:138px}}
+@media(max-width:520px){.list{grid-template-columns:repeat(2,minmax(0,1fr))}.art-card{grid-template-columns:92px 1fr 32px!important}.art-card .icon{width:92px!important;height:92px!important}}
+
+
+.onboard{position:fixed;inset:0;z-index:100;background:rgba(45,54,48,.46);backdrop-filter:blur(10px);display:grid;place-items:center;padding:22px}.onboard[hidden]{display:none}.onbox{width:min(100%,420px);background:#fffdf5;border:1px solid #e8e0c9;border-radius:28px;padding:24px;box-shadow:0 24px 70px #0003}.onbox h2{font-size:25px;margin:0 0 6px}.onbox .hello{font-size:13px;color:#718078;margin-bottom:20px}.field{margin:13px 0}.field label{display:block;font-size:12px;font-weight:800;margin:0 0 6px}.field input{width:100%;border:1px solid #ddd5bd;border-radius:14px;padding:12px 13px;background:#fff;font-size:16px}.hemiPick{display:grid;grid-template-columns:1fr 1fr;gap:8px}.hemiPick button{border:1px solid #ddd5bd;background:#fff;border-radius:15px;padding:13px 6px;color:#59665e}.hemiPick button.active{background:#dcebd6;border-color:#91bd80;color:#315a2c;font-weight:850}.startBtn{width:100%;border:0;border-radius:15px;background:#6fa66d;color:white;font-weight:850;padding:13px;margin-top:10px;font-size:16px}.startBtn:disabled{opacity:.4}.editHint{text-align:center;font-size:10px;color:#8b918d;margin-top:9px}
 </style>
 </head>
 <body>
 <div class="app">
-<header><div><h1>🏝️ 내 동숲 도감</h1><div class="sub">전체 도감 + 이번 달 출현을 한눈에</div></div><div class="pill" id="today"></div></header>
+<header><div><h1>🏝️ 내 동숲 도감</h1><div class="sub">전체 도감 + 이번 달 출현을 한눈에</div></div><button class="profilePill" id="profileBtn" type="button"><b id="profileName">프로필</b><span id="today"></span></button></header>
 <div class="summary" id="summary"></div>
 <div class="controls">
   <div class="row">
@@ -49,6 +83,17 @@ nav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,253,245,.94);back
 <div class="list" id="list"><div class="empty">데이터 불러오는 중…</div></div>
 </div>
 <nav><div class="navin" id="nav"></div></nav>
+<div class="onboard" id="onboard" hidden>
+  <div class="onbox">
+    <h2>🌴 섬 도감 시작하기</h2>
+    <div class="hello">내 섬에 맞춰 출현 정보를 보여줄게.</div>
+    <div class="field"><label>유저 이름</label><input id="userNameInput" maxlength="20" placeholder="예: 소연" autocomplete="off"></div>
+    <div class="field"><label>섬 이름</label><input id="islandNameInput" maxlength="20" placeholder="예: 코난섬" autocomplete="off"></div>
+    <div class="field"><label>우리 섬은 어디야?</label><div class="hemiPick" id="hemiPick"><button type="button" data-h="north">🌸 북반구</button><button type="button" data-h="south">🌴 남반구</button></div></div>
+    <button class="startBtn" id="startBtn" type="button">도감 시작하기</button>
+    <div class="editHint">나중에 오른쪽 위 프로필을 눌러 언제든 바꿀 수 있어.</div>
+  </div>
+</div>
 <script>
 const URLS={fish:'https://raw.githubusercontent.com/alexislours/ACNHAPI/master/fish.json',bugs:'https://raw.githubusercontent.com/alexislours/ACNHAPI/master/bugs.json',sea:'https://raw.githubusercontent.com/alexislours/ACNHAPI/master/sea.json',art:'https://raw.githubusercontent.com/alexislours/ACNHAPI/master/art.json'};
 const tabs=[['fish','🐟','물고기'],['bugs','🦋','곤충'],['sea','🦀','해산물'],['collect','🗂️','수집품']];
@@ -57,8 +102,27 @@ const $=s=>document.querySelector(s); const monthNow=new Date().getMonth()+1; co
 $('#today').textContent=`${monthNow}월 · ${String(hourNow).padStart(2,'0')}시`;
 for(let m=1;m<=12;m++) $('#month').insertAdjacentHTML('beforeend',`<option value="${m}" ${m===monthNow?'selected':''}>${m}월</option>`);
 $('#monthSeg').innerHTML='<button data-h="south">남반구</button><button data-h="north">북반구</button>';
-let hemi=localStorage.getItem('acnh-hemi')||'south'; [...$('#monthSeg').children].forEach(b=>b.classList.toggle('active',b.dataset.h===hemi));
-$('#monthSeg').onclick=e=>{if(!e.target.dataset.h)return;hemi=e.target.dataset.h;localStorage.setItem('acnh-hemi',hemi);[...$('#monthSeg').children].forEach(b=>b.classList.toggle('active',b.dataset.h===hemi));render()};
+let profile=JSON.parse(localStorage.getItem('acnh-profile')||'null');
+let hemi=profile?.hemi||localStorage.getItem('acnh-hemi')||'south'; [...$('#monthSeg').children].forEach(b=>b.classList.toggle('active',b.dataset.h===hemi));
+$('#monthSeg').onclick=e=>{if(!e.target.dataset.h)return;hemi=e.target.dataset.h;localStorage.setItem('acnh-hemi',hemi);if(profile){profile.hemi=hemi;localStorage.setItem('acnh-profile',JSON.stringify(profile));updateProfile()}[...$('#monthSeg').children].forEach(b=>b.classList.toggle('active',b.dataset.h===hemi));render()};
+function updateProfile(){
+  if(!profile){$('#profileName').textContent='프로필';return}
+  $('#profileName').textContent=`${profile.island} · ${profile.user}`;
+}
+function openProfile(){
+  $('#userNameInput').value=profile?.user||''; $('#islandNameInput').value=profile?.island||'';
+  const h=profile?.hemi||hemi; [...$('#hemiPick').children].forEach(b=>b.classList.toggle('active',b.dataset.h===h));
+  $('#onboard').hidden=false;
+}
+$('#hemiPick').onclick=e=>{const b=e.target.closest('button[data-h]');if(!b)return;[...$('#hemiPick').children].forEach(x=>x.classList.toggle('active',x===b))};
+$('#startBtn').onclick=()=>{
+  const user=$('#userNameInput').value.trim(),island=$('#islandNameInput').value.trim(),hb=$('#hemiPick button.active');
+  if(!user||!island||!hb){alert('유저 이름, 섬 이름, 북반구/남반구를 모두 선택해줘.');return}
+  profile={user,island,hemi:hb.dataset.h}; hemi=profile.hemi; localStorage.setItem('acnh-profile',JSON.stringify(profile));localStorage.setItem('acnh-hemi',hemi);
+  [...$('#monthSeg').children].forEach(b=>b.classList.toggle('active',b.dataset.h===hemi));updateProfile();$('#onboard').hidden=true;render();
+};
+$('#profileBtn').onclick=openProfile; updateProfile(); if(!profile) openProfile();
+
 $('#nav').innerHTML=tabs.map(([k,i,n])=>`<button class="navbtn ${k===tab?'active':''}" data-tab="${k}"><b>${i}</b>${n}</button>`).join('');
 $('#nav').onclick=e=>{let b=e.target.closest('button');if(!b)return;tab=b.dataset.tab;[...$('#nav').children].forEach(x=>x.classList.toggle('active',x===b)); if(tab==='collect'&&['month','monthleft','now','last'].includes(view))view='all'; render()};
 $('#collectseg').onclick=e=>{const b=e.target.closest('button');if(!b)return;collect=b.dataset.collect;[...$('#collectseg').children].forEach(x=>x.classList.toggle('active',x===b));render()};
@@ -76,7 +140,7 @@ function availableMonth(x,m){return monthsFor(x).includes(+m)}
 function availableNow(x,m){return availableMonth(x,m)&&timeFor(x).includes(hourNow)}
 function lastMonth(x,m){const ms=monthsFor(x); if(!ms.includes(+m)||ms.length===12)return false; const next=(+m%12)+1; return !ms.includes(next)}
 function ko(x){return x.name?.['name-KRko']||x['file-name']||'이름 없음'}
-function icon(x){return x.icon_uri||x.image_uri||''}
+function icon(x){const t=x._type; const f=x['file-name']; if(['fish','bugs','sea'].includes(t)&&f)return `https://raw.githubusercontent.com/alexislours/ACNHAPI/master/icons/${t}/${f}.png`; if(t==='art'&&f)return `https://raw.githubusercontent.com/alexislours/ACNHAPI/master/images/art/${f}.png`; return x.icon_uri||x.image_uri||''}
 function hlabel(h){h=(h+24)%24;if(h===0)return '자정 12시';if(h===12)return '낮 12시';if(h<12)return `오전 ${h}시`;return `오후 ${h-12}시`}
 function fmtTime(x){const a=[...new Set(timeFor(x))].sort((a,b)=>a-b);if(!a.length||a.length===24)return '하루 종일';const set=new Set(a),starts=[];for(let h=0;h<24;h++)if(set.has(h)&&!set.has((h+23)%24))starts.push(h);if(!starts.length)return '하루 종일';const ranges=[];for(const s of starts){let e=s;while(set.has(e%24)){e++;if(e-s>24)break}ranges.push(`${hlabel(s)}~${hlabel(e%24)}`)}return ranges.join(' · ')}
 const LOC={
@@ -118,6 +182,12 @@ const ART_FAKE={
 'warrior statue':'가품은 손에 삽을 들고 있어. 진품은 아무것도 들지 않음.'
 };
 function artTip(x){const en=(x.name?.['name-USen']||'').toLowerCase();return ART_FAKE[en]||'가품 없음 · 항상 진품'}
+function artImages(x){
+const n=(x.name?.['name-USen']||'').toLowerCase();
+const A={
+'academic painting':['FtrArtVitruvianMan','FtrArtVitruvianManFake'],'amazing painting':['FtrArtNightWatch','FtrArtNightWatchFake'],'ancient statue':['FtrSculptureDoguu','FtrSculptureDoguuFake'],'basic painting':['FtrArtBlueBoy','FtrArtBlueBoyFake'],'beautiful statue':['FtrSculptureMilo','FtrSculptureMiloFake'],'calm painting':['FtrArtSundayOn'], 'common painting':['FtrArtGleaners'],'detailed painting':['FtrArtAjisaisoukeizu','FtrArtAjisaisoukeizuFake'],'dynamic painting':['FtrArtKanagawaOki'],'familiar statue':['FtrSculptureThinker'],'famous painting':['FtrArtMonaLisa','FtrArtMonaLisaFake'],'flowery painting':['FtrArtSunflower'],'gallant statue':['FtrSculptureDavid','FtrSculptureDavidFake'],'glowing painting':['FtrArtFightingTemeraire'],'graceful painting':['FtrArtMikaeri','FtrArtMikaeriFake'],'great statue':['FtrSculptureKamehameha'],'informative statue':['FtrSculptureRosettaStone','FtrSculptureRosettaStoneFake'],'jolly painting':['FtrArtSummer','FtrArtSummerFake'],'moody painting':['FtrArtSlower'],'motherly statue':['FtrSculptureCapitolini','FtrSculptureCapitoliniFake'],'moving painting':['FtrArtBirthVenus','FtrArtBirthVenusFake'],'mysterious painting':['FtrArtIsleOfDead'],'mystic statue':['FtrSculptureNefertiti','FtrSculptureNefertitiFake'],'nice painting':['FtrArtFifePlayer'],'perfect painting':['FtrArtAppleOrange'],'proper painting':['FtrArtBarFB'],'quaint painting':['FtrArtMilkmaid','FtrArtMilkmaidFake'],'robust statue':['FtrSculptureDiskobolos','FtrSculptureDiskobolosFake'],'rock-head statue':['FtrSculptureOlmecaHead','FtrSculptureOlmecaHeadFake'],'scary painting':['FtrArtOotaniOniji','FtrArtOotaniOnijiFake'],'scenic painting':['FtrArtHunterSnow','FtrArtHunterSnowFake'],'serene painting':['FtrArtPortraitCecilia','FtrArtPortraitCeciliaFake'],'sinking painting':['FtrArtOphelia'],'solemn painting':['FtrArtLasMeninas','FtrArtLasMeninasFake'],'tremendous statue':['FtrSculptureHoumuwuDing','FtrSculptureHoumuwuDingFake'],'twinkling painting':['FtrArtStarryNight'],'valiant statue':['FtrSculptureSamothrace','FtrSculptureSamothraceFake'],'warm painting':['FtrArtClothedMaja'],'warrior statue':['FtrSculptureHeibayo','FtrSculptureHeibayoFake'],'wild painting left half':['FtrArtRaijin','FtrArtRaijinFake'],'wild painting right half':['FtrArtFuujin','FtrArtFuujinFake'],'wistful painting':['FtrArtPearlEarring','FtrArtPearlEarringFake'],'worthy painting':['FtrArtLibertyLeading']};
+return (A[n]||[]).map(z=>`https://acnhcdn.com/latest/FtrIcon/${z}.png`)
+}
 const GYROID_DATA=[
 ['가면 토용',['오렌지','그린','블루','퍼플','블랙','우드']],
 ['가시 토용',['그린','오렌지','브라운','라이트 그린','블루','캐멀','그레이']],
@@ -173,15 +243,17 @@ function activeType(){return tab==='collect'?collect:tab}
 function currentItems(){const type=activeType(),m=+$('#month').value,q=$('#search').value.trim().toLowerCase();let xs=normalized(type);xs=xs.filter(x=>{const d=x._type==='gyroid'?gyroidComplete(x):isDone(x._type,x.id);if(q&&!ko(x).toLowerCase().includes(q)&&!(x['file-name']||'').includes(q))return false;if(['art','gyroid'].includes(x._type))return view==='done'?d:true;if(view==='month')return availableMonth(x,m);if(view==='monthleft')return availableMonth(x,m)&&!d;if(view==='now')return availableNow(x,m);if(view==='last')return lastMonth(x,m);if(view==='done')return d;return true});return xs.sort((a,b)=>a.id-b.id)}
 function renderSummary(){const type=activeType(),m=+$('#month').value;if(type==='art'){const total=arr(db.art).length,done=arr(db.art).filter(x=>isDone('art',x.id)).length;$('#summary').innerHTML=`<div class="stat"><span>🖼️ 전체 미술품</span><b>${total||'-'}</b><span>종</span></div><div class="stat"><span>✅ 수집 완료</span><b>${done}</b><span>종</span></div><div class="stat"><span>⬜ 미수집</span><b>${Math.max(0,total-done)}</b><span>종</span></div><div class="stat"><span>📌 현재 보기</span><b>${currentItems().length}</b><span>종</span></div>`;return}if(type==='gyroid'){const total=GYROIDS.length,done=GYROIDS.filter(gyroidComplete).length,totalColors=GYROIDS.reduce((n,x)=>n+x.colors.length,0),ownedColors=GYROIDS.reduce((n,x)=>n+gyroidOwnedCount(x),0);$('#summary').innerHTML=`<div class="stat"><span>🗿 토용 종류</span><b>${done}/${total}</b><span>전컬러 완료</span></div><div class="stat"><span>🎨 전체 컬러</span><b>${ownedColors}/${totalColors}</b><span>소장</span></div><div class="stat"><span>⬜ 남은 컬러</span><b>${totalColors-ownedColors}</b><span>개</span></div><div class="stat"><span>📌 현재 보기</span><b>${currentItems().length}</b><span>종</span></div>`;return}
 const all=normalized(type),month=all.filter(x=>availableMonth(x,m)),left=month.filter(x=>!isDone(type,x.id)),now=month.filter(x=>availableNow(x,m));$('#summary').innerHTML=`<div class="stat"><span>📚 전체 도감</span><b>${all.length}</b><span>종</span></div><div class="stat"><span>🌼 ${m}월 출현</span><b>${month.length}</b><span>종</span></div><div class="stat"><span>⬜ ${m}월 미수집</span><b>${left.length}</b><span>종</span></div><div class="stat"><span>⏰ 지금 잡힘</span><b>${now.length}</b><span>종</span></div>`}
-function render(){const monthViews=['month','monthleft','now','last'];const type=activeType();const isCollect=tab==='collect';$('#collectseg').hidden=!isCollect;[...$('#viewtabs').children].forEach(b=>{const disabled=isCollect&&monthViews.includes(b.dataset.view);b.disabled=disabled;b.style.opacity=disabled?'.35':'1'});const titles={fish:'물고기',bugs:'곤충',sea:'해산물',art:'미술품',gyroid:'토용'};$('#sectionTitle').textContent=titles[type];$('#notice').textContent=isCollect?(collect==='art'?'미술품은 수집 체크 + 진품/가품 구별 포인트를 같이 보여줘.':'토용 36종 · 189개 컬러를 실제 게임 이미지로 비교하면서 각각 체크해.'):'노란색 = 선택한 달에 출현 · 초록 테두리 = 그중 아직 못 모은 것'; if(!db.fish||!db.bugs||!db.sea||!db.art){$('#list').innerHTML='<div class="empty">데이터를 불러오지 못했어.<br>인터넷 연결 후 새로고침해줘.</div>';return}renderSummary();const xs=currentItems(),m=+$('#month').value;$('#count').textContent=`${xs.length}개`;if(!xs.length){$('#list').innerHTML='<div class="empty">조건에 맞는 항목이 없어 🎉</div>';return}
+function render(){const monthViews=['month','monthleft','now','last'];const type=activeType();const isCollect=tab==='collect';$('#collectseg').hidden=!isCollect;[...$('#viewtabs').children].forEach(b=>{const disabled=isCollect&&monthViews.includes(b.dataset.view);b.disabled=disabled;b.style.opacity=disabled?'.35':'1'});const titles={fish:'물고기',bugs:'곤충',sea:'해산물',art:'미술품',gyroid:'토용'};$('#sectionTitle').textContent=titles[type];$('#notice').textContent=isCollect?(collect==='art'?'미술품은 진품·가품 사진을 나란히 비교하고 수집 체크할 수 있어.':'토용 36종 · 189개 컬러를 실제 게임 이미지로 비교하면서 각각 체크해.'):'노란색 = 선택한 달에 출현 · 초록 테두리 = 그중 아직 못 모은 것'; if(!db.fish||!db.bugs||!db.sea||!db.art){$('#list').innerHTML='<div class="empty">데이터를 불러오지 못했어.<br>인터넷 연결 후 새로고침해줘.</div>';return}renderSummary();const xs=currentItems(),m=+$('#month').value;$('#count').textContent=`${xs.length}개`;if(!xs.length){$('#list').innerHTML='<div class="empty">조건에 맞는 항목이 없어 🎉</div>';return}
 $('#list').innerHTML=xs.map(x=>{const d=x._type==='gyroid'?gyroidComplete(x):isDone(x._type,x.id),im=icon(x),mon=x._type!=='art'&&x._type!=='gyroid'&&availableMonth(x,m),left=mon&&!d;let meta='',badges='';if(x._type==='art'){meta=`${artType(x)} · ${x.hasFake?'가품 있음':'항상 진품'}`;badges=x.hasFake?'<span class="badge last">가품 주의</span>':'<span class="badge now">항상 진품</span>'}else if(x._type==='gyroid'){const owned=gyroidOwnedCount(x);meta=x.name['name-KRko']==='마스터 토용'?'마스터에게 커피를 50잔 구매한 뒤 받을 수 있는 특별 토용 · 컬러 리폼 없음':'토용 조각을 심고 물을 준 뒤 다음 날 발굴 · 리폼 키트 1개 또는 파니의 섬 리사&리포로 컬러 변경 가능';badges=d?'<span class="badge now">전컬러 완료</span>':`<span class="badge month">${owned}/${x.colors.length} 컬러</span>`}else{const sz=sizeInfo(x,x._type);meta=`<strong>시간</strong> ${fmtTime(x)}<br><strong>장소</strong> ${x._type==='sea'?'바다 잠수':loc(x)}`+(sz?` · <strong>크기</strong> ${sz}`:'')+(x._type==='sea'?` · <strong>속도</strong> ${SPD[x.speed]||x.speed||'—'}`:'');if(mon)badges+=`<span class="badge month">${m}월 출현</span>`;if(availableNow(x,m))badges+='<span class="badge now">지금 출현</span>';if(lastMonth(x,m))badges+='<span class="badge last">이번 달 마지막</span>';if(d)badges+='<span class="badge done">수집 완료</span>'}
 const strip=['art','gyroid'].includes(x._type)?'':`<div class="monthstrip">${Array.from({length:12},(_,i)=>`<span class="mcell ${monthsFor(x).includes(i+1)?'on':''} ${i+1===m?'sel':''}" title="${i+1}월"></span>`).join('')}</div>`;
-const visual=x._type==='gyroid'?`<img class="icon" src="${gyImg(x,x.colors[0])}" alt="${ko(x)}" onerror="this.outerHTML='<div class=&quot;icon gyroidIcon&quot;>🗿</div>'">`:`<img class="icon" src="${im}" alt="" onerror="this.style.visibility='hidden'">`;
-const tipbox=x._type==='art'?`<div class="artTip"><strong>${x.hasFake?'🔎 진품 구별':'✅ 가품 없음'}</strong><br>${artTip(x)}</div>`:'';
+const visual=x._type==='gyroid'?`<img class="icon" src="${gyImg(x,x.colors[0])}" alt="${ko(x)}" onerror="this.outerHTML='<div class=&quot;icon gyroidIcon&quot;>🗿</div>'">`:x._type==='art'?`<img class="icon" src="${im}" alt="${ko(x)}" onerror="this.outerHTML='<div class=&quot;icon gyroidIcon&quot;>?</div>'">`:'';
+const ai=x._type==='art'?artImages(x):[];
+const artCompare=x._type==='art'?`<div class="art-compare ${x.hasFake?'':'art-single'}"><div class="art-shot real"><img loading="lazy" src="${ai[0]||im}" alt="${ko(x)} 진품"><b>✓ 진품</b></div>${x.hasFake?`<div class="art-shot fake"><img loading="lazy" src="${ai[1]||''}" alt="${ko(x)} 가품"><b>✕ 가품</b></div>`:''}</div>`:'';
+const tipbox=x._type==='art'?`<div class="artTip"><strong>${x.hasFake?'🔎 구별 포인트':'✅ 가품 없음'}</strong><br>${artTip(x)}</div>`:'';
 const variants=x._type==='gyroid'?`<div class="variantCount">🎨 ${gyroidOwnedCount(x)} / ${x.colors.length} 컬러 소장 · 이미지를 눌러 체크</div><div class="variants">${x.colors.map(c=>`<button class="variant ${gyOwned(x.id,c)?'owned':''}" data-gid="${x.id}" data-color="${c}"><img loading="lazy" src="${gyImg(x,c)}" alt="${ko(x)} ${c}" onerror="this.style.opacity='.15'"><span class="vname">${gyOwned(x.id,c)?'✓ ':''}${c}</span></button>`).join('')}</div><button class="allColors ${d?'complete':''}" data-gall="${x.id}">${d?'✓ 전컬러 소장 완료':'이 토용 전컬러 한 번에 체크'}</button>`:'';
-const cls=['art','gyroid'].includes(x._type)?'':(mon?'month':'offmonth');
+const cls=(x._type==='gyroid'?'gyroid-card ':x._type==='art'?'art-card ':'critter-card ')+(['art','gyroid'].includes(x._type)?'':(mon?'month':'offmonth'));
 const action=x._type==='gyroid'?'':`<button class="check ${d?'done':''}" data-t="${x._type}" data-id="${x.id}">${d?'✓':'○'}</button>`;
-return `<div class="item ${cls} ${left?'left':''}">${visual}<div><div class="name">${ko(x)}</div><div class="meta">${meta}</div><div class="badges">${badges}</div>${strip}${tipbox}${variants}</div>${action}</div>`}).join('')}
+return x._type==='art'?`<div class="item ${cls}"><div class="art-main"><div class="name">${ko(x)}</div><div class="meta">${meta}</div><div class="badges">${badges}</div>${artCompare}${tipbox}</div>${action}</div>`:`<div class="item ${cls} ${left?'left':''}">${visual}<div><div class="name">${ko(x)}</div><div class="meta">${meta}</div><div class="badges">${badges}</div>${strip}${tipbox}${variants}</div>${action}</div>`}).join('')}
 $('#list').onclick=e=>{const v=e.target.closest('.variant');if(v){toggleGyroidColor(v.dataset.gid,v.dataset.color);return}const all=e.target.closest('.allColors');if(all){toggleGyroidAll(all.dataset.gall);return}const b=e.target.closest('.check');if(b)toggle(b.dataset.t,b.dataset.id)}
 $('#backup').onclick=()=>{const blob=new Blob([JSON.stringify({state,hemi,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='acnh-tracker-backup.json';a.click();URL.revokeObjectURL(a.href)};
 $('#restore').onclick=()=>$('#restoreFile').click();$('#restoreFile').onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text());if(j.state?.done){localStorage.setItem('acnh-state-v1',JSON.stringify(j.state));location.reload()}}catch{alert('백업 파일을 읽지 못했어.')}};
